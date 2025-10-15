@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BSBA Student Profiles</title>
+  <style>
+    body {font-family: Arial, sans-serif; background: #000; color: #fff; margin: 0; padding: 20px;}
+    header {display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #111; border-bottom: 2px solid #FFD700;}
+    h1 {color: #FFD700; font-size: 24px; margin: 0;}
+    .search-container input {width: 250px; padding: 8px; border: 2px solid #FFD700; border-radius: 8px; background: #111; color: #fff; font-size: 16px;}
+    .grid {display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-top: 30px;}
+    .card {background: #111; border: 2px solid #FFD700; border-radius: 8px; box-shadow: 0 0 10px rgba(255,215,0,0.2); padding: 12px; text-align: left; cursor: pointer; transition: transform 0.12s;}
+    .card:hover {transform: translateY(-6px)}
+    .card .row {display:flex; gap:10px; align-items:center}
+    .avatar img {width:72px; height:72px; border-radius:8px; object-fit:cover; border: 2px solid #FFD700}
+    .card .meta {flex:1}
+    .name {font-weight:700; color:#FFD700; margin:0 0 4px 0}
+    .small {font-size:13px; color:#fff; margin:0}
+    .muted {color:#ddd; font-size:13px}
+
+    /* Modal */
+    .modal {display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); align-items:center; justify-content:center; z-index:1000}
+    .modal.show {display:flex}
+    .modal-card {background:#111; border:2px solid #FFD700; padding:22px; border-radius:10px; width:380px; color:#fff; box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+    .modal-card .avatar {margin-bottom:12px}
+    .close-btn {position:absolute; right:18px; top:18px; background:#FFD700; color:#000; border:none; width:32px; height:32px; border-radius:50%; font-weight:700; cursor:pointer}
+
+    /* helper */
+    .note{font-size:13px;color:#ddd;margin-top:10px}
+    @media (max-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))} .search-container input{width:160px}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BSBA Student Profiles</h1>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search student by name or ID..." onkeyup="searchStudents()">
+    </div>
+  </header>
+
+  <div class="grid" id="studentGrid">
+    <!-- EDIT THESE CARDS DIRECTLY: replace name, id, sex, age and image URL as needed -->
+
+    <div class='card' data-name='Abatayo Joseph Albert B' data-id='20231244' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=11' alt='Abatayo'></div>
+      <div class='meta'><p class='name'>Abatayo Joseph Albert B</p><p class='small'>ID: 20231244</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Arban Khent Mark S' data-id='20230437' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=12' alt='Arban K'></div>
+      <div class='meta'><p class='name'>Arban Khent Mark S</p><p class='small'>ID: 20230437</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Arban Paul John E' data-id='20155036' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=13' alt='Arban P'></div>
+      <div class='meta'><p class='name'>Arban Paul John E</p><p class='small'>ID: 20155036</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Bajao Elmar M Jr' data-id='20232775' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=14' alt='Bajao'></div>
+      <div class='meta'><p class='name'>Bajao Elmar M Jr</p><p class='small'>ID: 20232775</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Barangot Kenly I' data-id='20230418' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=15' alt='Barangot'></div>
+      <div class='meta'><p class='name'>Barangot Kenly I</p><p class='small'>ID: 20230418</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Baring Maria Trisha Jane P' data-id='20233065' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=16' alt='Baring'></div>
+      <div class='meta'><p class='name'>Baring Maria Trisha Jane P</p><p class='small'>ID: 20233065</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Batosin Keziah Angelica P' data-id='20232527' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=17' alt='Batosin'></div>
+      <div class='meta'><p class='name'>Batosin Keziah Angelica P</p><p class='small'>ID: 20232527</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Bayking Chrislyn S' data-id='20221134' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=18' alt='Bayking'></div>
+      <div class='meta'><p class='name'>Bayking Chrislyn S</p><p class='small'>ID: 20221134</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Bermudo Kyle Nathaniel L' data-id='20233176' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=19' alt='Bermudo'></div>
+      <div class='meta'><p class='name'>Bermudo Kyle Nathaniel L</p><p class='small'>ID: 20233176</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Bucay Cristine June D' data-id='20233199' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=20' alt='Bucay'></div>
+      <div class='meta'><p class='name'>Bucay Cristine June D</p><p class='small'>ID: 20233199</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Butalid Jenny Vieve L' data-id='20231069' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=21' alt='Butalid'></div>
+      <div class='meta'><p class='name'>Butalid Jenny Vieve L</p><p class='small'>ID: 20231069</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Cabalida Trixcy P' data-id='20230848' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=22' alt='Cabalida'></div>
+      <div class='meta'><p class='name'>Cabalida Trixcy P</p><p class='small'>ID: 20230848</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Camaro Jean Claire M' data-id='20230461' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=23' alt='Camaro'></div>
+      <div class='meta'><p class='name'>Camaro Jean Claire M</p><p class='small'>ID: 20230461</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Dedi Gaudencio A Jr' data-id='20230892' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=24' alt='Dedi'></div>
+      <div class='meta'><p class='name'>Dedi Gaudencio A Jr</p><p class='small'>ID: 20230892</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Dee Ma. Christina J' data-id='20230785' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=25' alt='Dee'></div>
+      <div class='meta'><p class='name'>Dee Ma. Christina J</p><p class='small'>ID: 20230785</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Edubos Khizia Mae A' data-id='20230713' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=26' alt='Edubos'></div>
+      <div class='meta'><p class='name'>Edubos Khizia Mae A</p><p class='small'>ID: 20230713</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Estrada Marianne D' data-id='20230333' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=27' alt='Estrada'></div>
+      <div class='meta'><p class='name'>Estrada Marianne D</p><p class='small'>ID: 20230333</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Fernandez Cristene Cler N' data-id='20222196' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=28' alt='Fernandez'></div>
+      <div class='meta'><p class='name'>Fernandez Cristene Cler N</p><p class='small'>ID: 20222196</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Go Jaselle Van M' data-id='20230846' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=29' alt='Go Jaselle'></div>
+      <div class='meta'><p class='name'>Go Jaselle Van M</p><p class='small'>ID: 20230846</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Ipolan Krisha Bea L' data-id='20230274' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=30' alt='Ipolan'></div>
+      <div class='meta'><p class='name'>Ipolan Krisha Bea L</p><p class='small'>ID: 20230274</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Itum Mary Rose S' data-id='20232134' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=31' alt='Itum'></div>
+      <div class='meta'><p class='name'>Itum Mary Rose S</p><p class='small'>ID: 20232134</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Jagonal Albert R Jr' data-id='20230422' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=32' alt='Jagonal'></div>
+      <div class='meta'><p class='name'>Jagonal Albert R Jr</p><p class='small'>ID: 20230422</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Jalandoni Hessiell D' data-id='20230243' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=33' alt='Jalandoni'></div>
+      <div class='meta'><p class='name'>Jalandoni Hessiell D</p><p class='small'>ID: 20230243</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Jaranilla Shella' data-id='20230329' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=34' alt='Jaranilla'></div>
+      <div class='meta'><p class='name'>Jaranilla Shella</p><p class='small'>ID: 20230329</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Lamomay Artchelyn S' data-id='20200892' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=35' alt='Lamomay'></div>
+      <div class='meta'><p class='name'>Lamomay Artchelyn S</p><p class='small'>ID: 20200892</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Lavinia Marjorie C' data-id='20230938' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=36' alt='Lavinia'></div>
+      <div class='meta'><p class='name'>Lavinia Marjorie C</p><p class='small'>ID: 20230938</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Lebrella Liezel A' data-id='20230955' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=37' alt='Lebrella'></div>
+      <div class='meta'><p class='name'>Lebrella Liezel A</p><p class='small'>ID: 20230955</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Lindongan Aya L' data-id='20230105' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=38' alt='Lindongan'></div>
+      <div class='meta'><p class='name'>Lindongan Aya L</p><p class='small'>ID: 20230105</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Mapano Emalyn E' data-id='20210637' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=39' alt='Mapano'></div>
+      <div class='meta'><p class='name'>Mapano Emalyn E</p><p class='small'>ID: 20210637</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Nacario Ria Mae P' data-id='20232518' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=40' alt='Nacario'></div>
+      <div class='meta'><p class='name'>Nacario Ria Mae P</p><p class='small'>ID: 20232518</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Naelga Aira C' data-id='20230929' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=41' alt='Naelga Aira'></div>
+      <div class='meta'><p class='name'>Naelga Aira C</p><p class='small'>ID: 20230929</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Naelga Kyla Therese A' data-id='20230473' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=42' alt='Naelga Kyla'></div>
+      <div class='meta'><p class='name'>Naelga Kyla Therese A</p><p class='small'>ID: 20230473</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Nalzaro Gehazi N' data-id='20231463' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=43' alt='Nalzaro'></div>
+      <div class='meta'><p class='name'>Nalzaro Gehazi N</p><p class='small'>ID: 20231463</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Obasa Pauladriane D' data-id='20232832' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='Pauladriane.jpg' alt='Obasa'></div>
+      <div class='meta'><p class='name'>Obasa Pauladriane D</p><p class='small'>ID: 20232832</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Oga Client Joseph M' data-id='20230516' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=45' alt='Oga'></div>
+      <div class='meta'><p class='name'>Oga Client Joseph M</p><p class='small'>ID: 20230516</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Pabayo Hezel Gwenn B' data-id='20231018' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=46' alt='Pabayo'></div>
+      <div class='meta'><p class='name'>Pabayo Hezel Gwenn B</p><p class='small'>ID: 20231018</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Pagtalunan Jilmar L' data-id='20230863' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=47' alt='Pagtalunan'></div>
+      <div class='meta'><p class='name'>Pagtalunan Jilmar L</p><p class='small'>ID: 20230863</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Pagunsan Nicole C' data-id='20230849' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=48' alt='Pagunsan'></div>
+      <div class='meta'><p class='name'>Pagunsan Nicole C</p><p class='small'>ID: 20230849</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Rabanes Geneses C' data-id='20213537' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=49' alt='Rabanes'></div>
+      <div class='meta'><p class='name'>Rabanes Geneses C</p><p class='small'>ID: 20213537</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Rama Christy Jane B' data-id='20222002' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=50' alt='Rama'></div>
+      <div class='meta'><p class='name'>Rama Christy Jane B</p><p class='small'>ID: 20222002</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Roble Grace Lyn O' data-id='20231428' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=51' alt='Roble'></div>
+      <div class='meta'><p class='name'>Roble Grace Lyn O</p><p class='small'>ID: 20231428</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Sabellina Welme Rose Q' data-id='20232432' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=52' alt='Sabellina'></div>
+      <div class='meta'><p class='name'>Sabellina Welme Rose Q</p><p class='small'>ID: 20232432</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Sabio Renheart A' data-id='20232524' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=53' alt='Sabio'></div>
+      <div class='meta'><p class='name'>Sabio Renheart A</p><p class='small'>ID: 20232524</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Salilo Neville Deff Clarence R' data-id='20232422' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=54' alt='Salilo'></div>
+      <div class='meta'><p class='name'>Salilo Neville Deff Clarence R</p><p class='small'>ID: 20232422</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Solijon Lea Jean B' data-id='20230085' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=55' alt='Solijon'></div>
+      <div class='meta'><p class='name'>Solijon Lea Jean B</p><p class='small'>ID: 20230085</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Ugsod Justine Gio D' data-id='20211222' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=56' alt='Ugsod'></div>
+      <div class='meta'><p class='name'>Ugsod Justine Gio D</p><p class='small'>ID: 20211222</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Urbano Caroline N' data-id='20230866' data-sex='F' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=57' alt='Urbano'></div>
+      <div class='meta'><p class='name'>Urbano Caroline N</p><p class='small'>ID: 20230866</p><p class='small'>Sex: F</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <div class='card' data-name='Vedeja Uriel P' data-id='20233193' data-sex='M' onclick="openModal(this)">
+      <div class='row'><div class='avatar'><img src='https://i.pravatar.cc/150?img=58' alt='Vedeja'></div>
+      <div class='meta'><p class='name'>Vedeja Uriel P</p><p class='small'>ID: 20233193</p><p class='small'>Sex: M</p><p class='small muted'>Age: </p></div></div>
+    </div>
+
+    <!-- End of cards -->
+  </div>
+
+  <div id="studentModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <div class="avatar"><img id="modalImg" src="" alt="Student Image" style="width:120px;height:120px;border-radius:8px;object-fit:cover;border:2px solid #FFD700"></div>
+      <h2 id="modalName" style="color:#FFD700;margin:10px 0 4px 0"></h2>
+      <p id="modalId" class="small"></p>
+      <p id="modalSex" class="small"></p>
+      <p id="modalAge" class="small"></p>
+    </div>
+  </div>
+
+  <p class="note">BSBA Section 3I List: From  <code>the <code> sis <code>portal</code> we <code>using this copy by </code>good intentions.<code></code><code>&lt; <img&gt;<code></code></p>
+
+  <script>
+    const modal = document.getElementById('studentModal');
+    const modalName = document.getElementById('modalName');
+    const modalImg = document.getElementById('modalImg');
+    const modalId = document.getElementById('modalId');
+    const modalSex = document.getElementById('modalSex');
+    const modalAge = document.getElementById('modalAge');
+
+    function openModal(card){
+      const name = card.getAttribute('data-name') || card.querySelector('.name').textContent;
+      const id = card.getAttribute('data-id') || '';
+      const sex = card.getAttribute('data-sex') || '';
+      const img = card.querySelector('img').src;
+      const ageText = card.querySelector('.muted').textContent.replace('Age:','').trim();
+
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      modalName.textContent = name;
+      modalImg.src = img;
+      modalId.textContent = `ID: ${id}`;
+      modalSex.textContent = `Sex: ${sex}`;
+      modalAge.textContent = `Age: ${ageText}`;
+    }
+
+    function closeModal(){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    }
+
+    window.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); })
+
+    function searchStudents(){
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      document.querySelectorAll('.card').forEach(card=>{
+        const name = (card.getAttribute('data-name')||'').toLowerCase();
+        const id = (card.getAttribute('data-id')||'').toLowerCase();
+        card.style.display = (name.includes(q) || id.includes(q)) ? 'block' : 'none';
+      })
+    }
+  </script>
+</body>
+</html>
